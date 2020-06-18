@@ -9,7 +9,7 @@ class CurveBall(Optimizer):
 		CurveBall optimizer
 		extending from the Optimizer class of pytorch
 	"""
-	def __init__(self, params, lr=None, momentum=None, auto_lambda=True, lambd=10.0,
+	def __init__(self, params, lr=1e-3, momentum=0.9, auto_lambda=True, lambd=10.0,
 			lambda_factor=0.999, lambda_low=0.5, lambda_high=1.5, lambda_interval=5):
 		"""
 			the standard init function this just sets the default dictionary
