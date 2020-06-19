@@ -154,7 +154,7 @@ class CurveBall(Optimizer):
 		# now calculate the term for ostrwoski and update them
 		for (dz, ds) in zip(J_z, J_s):
 			den = dz-2*ds
-			ds = ds/(den + trans(den)*eps)
+			ds = (dz)/(den + trans(den)*eps)
 
 		# addition with delta_ss
 		for (ds,j) in zip(delta_ss, J_s):
