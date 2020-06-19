@@ -9,10 +9,10 @@ import time, pickle
 
 # from curveball import CurveBall
 # from ord_3_newton import CurveBall
-# from ostrowski import CurveBall
+from debug_ostrow import CurveBall
 # from ord_7_newton import CurveBall
 # from ord_8_newton import CurveBall
-name = 'curve'
+name = 'test'
 
 class Net(nn.Module):
     def __init__(self):
@@ -46,10 +46,12 @@ def train(model, device, train_loader, optimizer, epoch, metrics):
         (loss, pred) = optimizer.step(model_fn, loss_fn)
         pred = pred.max(1, keepdim=True)[1]  # get the index of the max log-probability
         accuracy = pred.eq(target.view_as(pred)).double().mean().item()
+        print('batch:', i, 'train_loss:', loss.item())
         train_loss+=loss.item()
         train_acc+=accuracy
         metrics['batch_loss'].append(loss.item())
         metrics['batch_acc'].append(accuracy)
+        # exit()
     train_loss/=len(train_loader)
     train_acc/=len(train_loader)
     return train_loss, train_acc
