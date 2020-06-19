@@ -7,7 +7,7 @@ import torch.optim as optim
 from loader import train_loader, test_loader, device
 import time, pickle
 
-name = 'adam'
+name = 'sgdm_1e-1'
 
 class Net(nn.Module):
     def __init__(self):
@@ -70,9 +70,9 @@ def test(model, device, test_loader):
 def main():
     # Training settings
     model = Net().to(device)
-    optimizer = optim.Adam(model.parameters(), lr=1e-3)
-    # optimizer = optim.SGD(model.parameters(), lr=1e-3, momentum=0.0)
-    # optimizer = optim.SGD(model.parameters(), lr=1e-3, momentum=0.9)
+    # optimizer = optim.Adam(model.parameters(), lr=1e-1)
+    # optimizer = optim.SGD(model.parameters(), lr=1e-1, momentum=0.0)
+    optimizer = optim.SGD(model.parameters(), lr=1e-1, momentum=0.9)
     metrics = {'train_loss': [], 'train_acc': [], 'test_loss': [], 'test_acc': [], 'batch_loss': [], 'batch_acc':[]}
     for epoch in range(0,25):
         tic = time.time()

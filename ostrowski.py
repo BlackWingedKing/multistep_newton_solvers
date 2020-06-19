@@ -2,6 +2,10 @@ import torch as t
 from torch.optim import Optimizer
 from torch.autograd import grad
 
+def trans(a):
+	b = t.sign(a)
+	return -0.5*b**2 + 0.5*b + 1
+
 class CurveBall(Optimizer):
 	"""
 		CurveBall optimizer
@@ -150,7 +154,7 @@ class CurveBall(Optimizer):
 		# now calculate the term for ostrwoski and update them
 		for (dz, ds) in zip(J_z, J_s):
 			den = dz-2*ds
-			ds.mul_(dz/(den + t.sign(den)*eps))
+			ds = ds/(den + trans(den)*eps)
 
 		# addition with delta_ss
 		for (ds,j) in zip(delta_ss, J_s):

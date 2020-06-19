@@ -15,7 +15,7 @@ class CurveBall(Optimizer):
 		extending from the Optimizer class of pytorch
 	"""
 	def __init__(self, params, auto_lambda=True, lambd=10.0,
-			lambda_factor=0.999, lambda_low=0.5, lambda_high=1.5, lambda_interval=5,eps=1e-4):
+			lambda_factor=0.999, lambda_low=0.5, lambda_high=1.5, lambda_interval=5,eps=1e-6):
 		"""
 			the standard init function this just sets the default dictionary
 			params - model params 
@@ -160,8 +160,11 @@ class CurveBall(Optimizer):
 		# now calculate the term for ostrwoski and update them
 		for (dz, ds) in zip(J_z, J_s):
 			den = dz-2*ds
-			pre_ds = ds.clone()
-			ds.mul_(dz/(den - trans(den)*eps))
+			val = (ds)/(den + trans(den)*eps)
+			if(isn(val)):
+				print(den)
+				exit()
+			ds = val
 
 		# addition with delta_ss
 		for (ds,j) in zip(delta_ss, J_s):
